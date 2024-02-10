@@ -2,7 +2,7 @@ import "../scss/Footer.scss";
 import ScrollToHashElement from "../components/ScrollToHashElement";
 export const Footer = () => {
   return (
-    <footer id="contact">
+    <div id="contact">
       <ScrollToHashElement />
       <ul>
         <li className="highlight">Follow us!</li>
@@ -22,6 +22,6 @@ export const Footer = () => {
         <li>Phone: +1 (0) 000 0000 0001</li>
         <li>Fax: +1 (0) 000 0000 002</li>
       </ul>
-    </footer>
+    </div>
   );
 };

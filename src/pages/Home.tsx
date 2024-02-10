@@ -26,7 +26,9 @@ export const Home = () => {
               </Link>
             </div>
           </div>
-          <img src={plate} alt="plate" />
+          <div className="img-container">
+            <img src={plate} alt="plate" />
+          </div>
         </section>
       </div>
     </>
