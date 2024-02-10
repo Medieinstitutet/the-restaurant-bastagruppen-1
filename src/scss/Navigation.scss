@@ -1,0 +1,33 @@
+nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  ul {
+    width: 80%;
+    padding: 20px 0 5px 0;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    list-style: none;
+
+    margin: 0;
+
+    li {
+      a {
+        font-size: 1.3rem;
+        color: white;
+        text-decoration: none;
+        transition: letter-spacing 0.2s;
+        &:hover {
+          transition: letter-spacing 0.2s;
+          letter-spacing: 2px;
+        }
+        &:focus {
+          font-weight: bolder;
+          letter-spacing: 2px;
+        }
+      }
+    }
+  }
+}

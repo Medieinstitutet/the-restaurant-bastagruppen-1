@@ -1,10 +1,13 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
-
+import background from "./assets/heroimg.jpg";
+import "./scss/App.scss";
 function App() {
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <div className="bg" style={{ backgroundImage: `url(${background})` }}>
+        <RouterProvider router={router}></RouterProvider>
+      </div>
     </>
   );
 }

@@ -1,0 +1,28 @@
+footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  width: 100%;
+
+  ul {
+    list-style: none;
+    color: white;
+    width: 26.66666666666667%;
+    padding: 20px 0 20px 0;
+    border-top: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    li {
+      line-height: 1.8rem;
+      cursor: pointer;
+    }
+    .highlight {
+      font-size: 1.3rem;
+      font-weight: bold;
+      border-bottom: 1px solid white;
+    }
+  }
+}
