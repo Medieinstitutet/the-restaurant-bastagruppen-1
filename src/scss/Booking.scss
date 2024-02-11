@@ -1,0 +1,82 @@
+.booking--container{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(117, 117, 117, 0.2);
+    width: 55%;
+    margin: 0 auto;
+    padding: 20px 0;
+
+
+    h1{
+        color: white;
+    }
+
+    .persons-time-date{
+        
+        margin-top: 30px;
+
+        select{
+            padding: 15px 0;
+            width: 150px;
+            border-style: none;
+            text-align: center;
+        }
+
+        .booking-time{
+            margin: 0 30px;
+        }
+
+        input{
+            padding: 15px 0;
+            width: 150px;
+            border-style: none;
+            text-align: center;
+        }
+    }
+
+    
+    .booking-contact{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        width: 75%;
+
+        margin-top: 30px;
+        padding: 20px 0;
+        border-top: 1px solid  rgb(255, 201, 119);
+
+        h5{
+            width: 100%;
+            text-align: center;
+            color: white;
+            padding: 0 0 15px;
+
+        }
+
+        input{
+            width: 249px;
+            padding: 15px 0;
+            margin: 5px;
+            border: none;
+            text-align: center;
+        }
+    }
+
+    button{
+        border: 1px solid rgb(255, 201, 119);
+        color: white;
+        background: none;
+        padding: 15px;
+        cursor: pointer;
+        // margin-top: 15px;
+
+        &:hover{
+            background-color: rgb(255, 201, 119); 
+        } 
+    }
+
+}
