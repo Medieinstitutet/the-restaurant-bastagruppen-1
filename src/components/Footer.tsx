@@ -1,5 +1,5 @@
 import "../scss/Footer.scss";
-import ScrollToHashElement from "../components/ScrollToHashElement";
+import ScrollToHashElement from "../services/ScrollToHashElement";
 export const Footer = () => {
   return (
     <div id="contact">
