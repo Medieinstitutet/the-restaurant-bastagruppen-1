@@ -1,10 +1,10 @@
 import { BookingPresentation } from "../components/BookingPresentation";
 import { useState } from "react";
 import { IBookingAdmin } from "../models/IBookingAdmin";
-import { getBookings } from "../services/api/GetBookings";
+import { getBookings } from "../services/GetBookings";
 import "../scss/Administrative.scss";
 import { Booking } from "../models/Booking";
-import { createBooking } from "../services/api/BookingCreate";
+import { createBooking } from "../services/BookingCreate";
 
 export const Administrative = () => {
   const [bookings, setBookings] = useState<IBookingAdmin[]>();
@@ -51,7 +51,7 @@ export const Administrative = () => {
     });
   };
 
-  //Update the state based on name and value from the input fields
+  //Update the state based on the name and value attributes from the input & select fields.
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {

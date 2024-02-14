@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Booking } from "../../models/Booking";
+import { Booking } from "../models/Booking";
 
 export const createBooking = async (bookingData: Booking) => {
   const response = await axios.post(
