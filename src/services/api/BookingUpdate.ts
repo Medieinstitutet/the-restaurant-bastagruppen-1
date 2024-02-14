@@ -12,5 +12,5 @@ export const BookingUpdate = async () => {
       customerId: "123",
     }
   );
-  console.log(response);
+  return response;
 };

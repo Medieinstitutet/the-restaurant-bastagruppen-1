@@ -1,4 +1,4 @@
-import { Customer } from "./ICustomer";
+import { ICustomer } from "./ICustomer";
 
 export class Booking {
   constructor(
@@ -6,6 +6,6 @@ export class Booking {
     public date: string,
     public time: string,
     public numberOfGuests: number,
-    public customer: Customer
+    public customer: ICustomer
   ) {}
 }

@@ -1,11 +1,24 @@
+import axios from "axios";
 import { IBookingAdmin } from "../models/IBookingAdmin";
-import "../scss/Administrative.scss";
+import { Dispatch, SetStateAction } from "react";
 
 interface IBookingPresentationProps {
   booking: IBookingAdmin;
+  setBookings: Dispatch<SetStateAction<IBookingAdmin[] | undefined>>;
 }
 
-export const BookingPresentation = ({ booking }: IBookingPresentationProps) => {
+export const BookingPresentation = ({
+  booking,
+  setBookings,
+}: IBookingPresentationProps) => {
+  const BookingDelete = async () => {
+    await axios.delete(
+      "https://school-restaurant-api.azurewebsites.net/booking/delete/" +
+        booking._id
+    );
+    setBookings((Bookings) => Bookings?.filter((b) => b._id !== booking._id));
+  };
+
   return (
     <div key={booking._id} className="booking-container">
       <h2>Booking Information</h2>
@@ -28,8 +41,7 @@ export const BookingPresentation = ({ booking }: IBookingPresentationProps) => {
         <b>RestaurantID:</b> {booking.restaurantId}
       </p>
       <div className="button-container">
-        <button>Delete Booking</button>
-        <button>Update Booking</button>
+        <button onClick={BookingDelete}>Delete Booking</button>
         <button>Customer Info</button>
       </div>
     </div>
