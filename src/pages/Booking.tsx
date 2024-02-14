@@ -1,22 +1,36 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import "../scss/Booking.scss";
+import { Booking } from "../models/Booking";
 
-export const Booking = () => {
-  
+export const Bookingg = () => {
   const [availableTables, setAvailableTables] = useState(15);
-  const [guests, setGuests] = useState(0);
-
-
+  // const [guests, setGuests] = useState(0);
+  
+  
+  const [bookATable, setBookATable] = useState<Booking>({
+    restaurantId: "65c8c9a5cbb6491fd64e9a84",
+    date: "",
+    time: "",
+    numberOfGuests: 0,
+    customer:{
+      name: "",
+      lastname: "",
+      email: "",
+      phone: "",
+    }
+  });
   const bookingTable = () => {
-
+    
     const seatsPertable: number = 6;
-    const tablesToBook: number = Math.ceil(guests / seatsPertable);
-
+    const tablesToBook: number = Math.ceil(bookATable.numberOfGuests / seatsPertable);
+    
     if(tablesToBook < availableTables){
-      setGuests(guests + tablesToBook);
+      setAvailableTables(bookATable.numberOfGuests + tablesToBook);
       setAvailableTables(availableTables - tablesToBook)
       setAvailableTables(availableTables - tablesToBook);
-      console.log({ tablesToBook }, { guests });
+      console.log( "Antal bord" +  " " + tablesToBook, 
+      "Antal kunder" + " " + bookATable.numberOfGuests,
+      "Ankomst" + " " + bookATable.time);
     };
     
     if(availableTables - tablesToBook <= 0){
@@ -25,16 +39,33 @@ export const Booking = () => {
   };
     
     const handleChangeTheInputs = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
-      setGuests(parseInt(e.target.value))
+      const { value } = e.target;
+      setBookATable({ ...bookATable, numberOfGuests: parseInt(value),
+     
+      });
     }
 
   const changeForm = (e: FormEvent) => {
     e.preventDefault()
     bookingTable()
     
-    if(guests < 1){
+    if(bookATable.numberOfGuests < 1){
       console.log("Enter number of customers");
     }
+   
+    setBookATable({
+    restaurantId: "65c8c9a5cbb6491fd64e9a84",
+    date: "",
+    time: "",
+    numberOfGuests: 0,
+    customer:{
+      name: "",
+      lastname: "",
+      email: "",
+      phone: "",
+    }
+   })
+
   }  
     return <>
   <section className="booking--container">
@@ -43,7 +74,7 @@ export const Booking = () => {
   
   <div className="persons-time-date">
     <select 
-    value={guests}
+    value={bookATable?.numberOfGuests}
     onChange={handleChangeTheInputs}>
       <option value={0} disabled>Number of guests</option>
       <option value={1}>1</option>
@@ -58,10 +89,11 @@ export const Booking = () => {
       <option value={10}>10</option>
     </select>
     
-    <select className="booking-time">
-      <option disabled>Time</option>
-      <option>15:00</option>
-      <option>21:00</option>
+    <select 
+    className="booking-time">
+      <option value="" disabled>Time</option>
+      <option value={18.00} >18:00</option>
+      <option value={21.00} >21:00</option>
     </select>
 
     <input 
@@ -82,7 +114,8 @@ export const Booking = () => {
       
       <input 
       type="tel" 
-      placeholder="070 000 00 22"/>
+      placeholder="070 000 00 22"
+      />
       
       <input 
       type="email" 
