@@ -16,9 +16,12 @@ export const Administrative = () => {
     };
     getBookingData();
   }
+
   const [formData, setFormData] = useState<Booking>({
+    //standard form data when first creating a booking
     restaurantId: "65c8c9a5cbb6491fd64e9a84",
     date: "",
+    //time set to 18:00 to avoid default value not being selectable in form
     time: "18:00",
     numberOfGuests: 0,
     customer: {
@@ -36,7 +39,7 @@ export const Administrative = () => {
 
     setBookings(updatedBookings.data);
 
-    //reset form after creating the new one
+    //resetting form data after creating a new booking
     setFormData({
       restaurantId: "65c8c9a5cbb6491fd64e9a84",
       date: "",
@@ -51,12 +54,14 @@ export const Administrative = () => {
     });
   };
 
-  //Update the state based on the name and value attributes from the input & select fields.
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
+    // Takes out the name and value from all the input/select elements inside the form
     const { name, value } = e.currentTarget;
-    console.log(`${name} has been changed to ${value}`);
+    // console.log(`${name} has been changed to ${value}`);   -  use for debugging
+
+    // Ensures the data is changed right to fit the object structure for the API
     setFormData((prevFormData) => ({
       ...prevFormData,
       ...(name === "date" || name === "time" || name === "numberOfGuests"
@@ -64,6 +69,7 @@ export const Administrative = () => {
         : {}),
       customer: {
         ...prevFormData.customer,
+        // Makes sure date, time and numberOfGuests attributes does not get placed into the customer object
         ...(name !== "date" && name !== "time" && name !== "numberOfGuests"
           ? { [name]: value }
           : {}),
@@ -129,7 +135,7 @@ export const Administrative = () => {
               <label>
                 email :
                 <input
-                  type="text"
+                  type="email"
                   name="email"
                   value={formData?.customer.email}
                   onChange={handleInputChange}
@@ -138,7 +144,7 @@ export const Administrative = () => {
               <label>
                 phone :
                 <input
-                  type="text"
+                  type="tel"
                   name="phone"
                   value={formData?.customer.phone}
                   onChange={handleInputChange}

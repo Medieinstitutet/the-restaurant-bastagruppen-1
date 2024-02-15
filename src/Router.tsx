@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { PageNotFound } from "./pages/PageNotFound";
 import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
-import { Booking } from "./pages/Booking";
+import { Bookingg } from "./pages/Booking";
 import { Administrative } from "./pages/Administrative";
 
 export const router = createBrowserRouter([
@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/booking",
-        element: <Booking />,
+        element: <Bookingg />,
       },
       {
         path: "/admin",
