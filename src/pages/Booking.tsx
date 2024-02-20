@@ -1,12 +1,12 @@
 import { FormEvent, useState } from "react";
 import "../scss/Booking.scss";
-import { Booking } from "../models/Booking";
+import { IBooking } from "../models/Booking";
 
 export const Bookingg = () => {
   const [availableTables, setAvailableTables] = useState(15);
   // const [guests, setGuests] = useState(0);
 
-  const [bookATable, setBookATable] = useState<Booking>({
+  const [bookATable, setBookATable] = useState<IBooking>({
     restaurantId: "65c8c9a5cbb6491fd64e9a84",
     date: "",
     time: "",

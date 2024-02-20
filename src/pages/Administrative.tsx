@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IBookingAdmin } from "../models/IBookingAdmin";
 import { getBookings } from "../services/GetBookings";
 import "../scss/Administrative.scss";
-import { Booking } from "../models/Booking";
+import { IBooking } from "../models/Booking";
 import { createBooking } from "../services/BookingCreate";
 
 export const Administrative = () => {
@@ -17,7 +17,7 @@ export const Administrative = () => {
     getBookingData();
   }
 
-  const [formData, setFormData] = useState<Booking>({
+  const [formData, setFormData] = useState<IBooking>({
     //standard form data when first creating a booking
     restaurantId: "65c8c9a5cbb6491fd64e9a84",
     date: "",
@@ -79,155 +79,78 @@ export const Administrative = () => {
   return (
     <>
       <div className="admin-container">
-        <div className="forms-container">
-          <div className="form-container">
-            <form onSubmit={handleSubmit}>
-              <h2>Create Booking</h2>
-              <label>
-                Date :
-                <input
-                  name="date"
-                  type="date"
-                  value={formData?.date}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                Time :
-                <select
-                  name="time"
-                  value={formData?.time}
-                  onChange={handleInputChange}
-                >
-                  <option>18:00</option>
-                  <option>21:00</option>
-                </select>
-              </label>
-              <label>
-                numberOfGuests :
-                <input
-                  name="numberOfGuests"
-                  type="number"
-                  min={1}
-                  max={90}
-                  value={formData?.numberOfGuests}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                name :
-                <input
-                  type="text"
-                  name="name"
-                  value={formData?.customer.name}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                lastname :
-                <input
-                  type="text"
-                  name="lastname"
-                  value={formData?.customer.lastname}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                email :
-                <input
-                  type="email"
-                  name="email"
-                  value={formData?.customer.email}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                phone :
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData?.customer.phone}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <button type="submit">Add Booking</button>
-            </form>
-          </div>
-
-          <div className="form-container">
-            <form onSubmit={handleSubmit}>
-              <h2>Update Booking</h2>
-              <label>
-                Date :
-                <input
-                  name="date"
-                  type="date"
-                  value={formData?.date}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                Time :
-                <select
-                  name="time"
-                  value={formData?.time}
-                  onChange={handleInputChange}
-                >
-                  <option disabled={true}>Available Hours</option>
-                  <option>18:00</option>
-                  <option>21:00</option>
-                </select>
-              </label>
-              <label>
-                numberOfGuests :
-                <input
-                  name="numberOfGuests"
-                  type="number"
-                  min={1}
-                  max={90}
-                  value={formData?.numberOfGuests}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                name :
-                <input
-                  type="text"
-                  name="name"
-                  value={formData?.customer.name}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                lastname :
-                <input
-                  type="text"
-                  name="lastname"
-                  value={formData?.customer.lastname}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                email :
-                <input
-                  type="text"
-                  name="email"
-                  value={formData?.customer.email}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                phone :
-                <input
-                  type="text"
-                  name="phone"
-                  value={formData?.customer.phone}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <button type="submit">Update Booking</button>
-            </form>
-          </div>
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <h2>Create Booking</h2>
+            <label>
+              Date :
+              <input
+                name="date"
+                type="date"
+                value={formData?.date}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              Time :
+              <select
+                name="time"
+                value={formData?.time}
+                onChange={handleInputChange}
+              >
+                <option>18:00</option>
+                <option>21:00</option>
+              </select>
+            </label>
+            <label>
+              numberOfGuests :
+              <input
+                name="numberOfGuests"
+                type="number"
+                min={1}
+                max={90}
+                value={formData?.numberOfGuests}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              name :
+              <input
+                type="text"
+                name="name"
+                value={formData?.customer.name}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              lastname :
+              <input
+                type="text"
+                name="lastname"
+                value={formData?.customer.lastname}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              email :
+              <input
+                type="email"
+                name="email"
+                value={formData?.customer.email}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label>
+              phone :
+              <input
+                type="tel"
+                name="phone"
+                value={formData?.customer.phone}
+                onChange={handleInputChange}
+              />
+            </label>
+            <button type="submit">Add Booking</button>
+          </form>
         </div>
 
         <div className="bookings-container">

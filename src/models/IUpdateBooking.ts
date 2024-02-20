@@ -1,8 +1,8 @@
-export interface IBookingAdmin {
+export interface IUpdateBooking {
+  id: string;
+  restaurantId: string;
   date: string;
   time: string;
   numberOfGuests: number;
-  _id: string;
-  restaurantId: string;
   customerId: string;
 }
