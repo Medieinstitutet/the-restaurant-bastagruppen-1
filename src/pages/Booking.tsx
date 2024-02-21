@@ -6,46 +6,93 @@ import { createBooking } from "../services/BookingCreate";
 import { getBookings } from "../services/GetBookings";
 import { IBooking } from "../models/Booking";
  
- 
-interface AvailableTables {
-  [date: string]: number;
-}
-let availableTable: number;
- 
- 
 export const Bookingg  = () => {
-  const [availableTables18, setAvailableTables18] = useState<AvailableTables>({});
-  const [availableTables21, setAvailableTables21] = useState<AvailableTables>({});
-  const [bookings, setBookings] = useState<IBookingAdmin[]>([]);
- 
- 
- 
+  const [availableTables18, setAvailableTables18] = useState([]);
+  const [availableTables21, setAvailableTables21] = useState([]);
+  const [bookings, setBookings] = useState<IBooking[]>([]);
+  
+  
+  
   useEffect(() => {
-  const getDataFromAxios = async () => {
-    const response = await getBookings()
-    setBookings(response.data)
+    const getBookingData = async () => {
+      const response = await getBookings();
+      setBookings(response.data);
+      console.log(response.data);
+    };
+    getBookingData();
+  },[]);
+
+
+
+const [formData, setFormData] = useState<IBooking>({
+  restaurantId: "65c8c9a5cbb6491fd64e9a84",
+  date: "",
+  time: "",
+  numberOfGuests: 0,
+  customer: {
+    name: "",
+    lastname: "",
+    email: "",
+    phone: "",
+  },
+})
+
+
+const handleSubmit = async (e: FormEvent) => {
+  e.preventDefault();
+
+  let totalTables: number = 15;
+  
+  const existingBookingsCount = bookings.filter(
+    (booking) => booking.date === formData.date && booking.time === formData.time).length;
+     
+    if (existingBookingsCount >= totalTables) {
+      alert('There are no tables available for the date and time you have selected');
+      return;
+    } 
+
+  // Lägg till den aktuella bokningen i bookings18
+  setAvailableTables18([...availableTables18]);
+  setAvailableTables21([...availableTables21]);
+
+  if(formData.numberOfGuests > 6){
+    alert("Your booking is for more than 6 people. Call us on 016 23 23 23")
+    return  setFormData({
+      restaurantId: "65c8c9a5cbb6491fd64e9a84",
+      date: "",
+      time: "",
+      numberOfGuests: 0,
+      customer: {
+        name: "",
+        lastname: "",
+        email: "",
+        phone: "",
+      },
+    });
+
   }
-  getDataFromAxios()  
-}, [])
- 
- 
- 
-  const [formData, setFormData] = useState<IBooking>({
-    restaurantId: "65c8c9a5cbb6491fd64e9a84",
-    date: "",
-    time: "18:00",
-    numberOfGuests: 0,
-    customer: {
-      name: "",
-      lastname: "",
-      email: "",
-      phone: "",
-    },
-  })
- 
- 
- 
- 
+
+    await createBooking(formData);
+    const updatedBookings = await getBookings();
+    setBookings(updatedBookings.data);
+           
+      //  resetting form data after creating a new booking
+    setFormData({
+      restaurantId: "65c8c9a5cbb6491fd64e9a84",
+      date: "",
+      time: "",
+      numberOfGuests: 0,
+      customer: {
+        name: "",
+        lastname: "",
+        email: "",
+        phone: "",
+      },
+    });
+      
+    console.log(bookings);
+}
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.currentTarget;
@@ -63,51 +110,6 @@ export const Bookingg  = () => {
       },
     }));
   };
- 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
- 
-    const matchingBookings = bookings.filter(
-      (booking: IBookingAdmin) => booking.date === formData.date && booking.time === formData.time
-    );
-
-    const totalBookings = matchingBookings.length;
-      const maxPersonsPerTable: number = 6;
-      const tablesToBook: number = Math.ceil(formData.numberOfGuests / maxPersonsPerTable);
- 
-      availableTable = formData.time === "18:00" ? (availableTables18[formData.date] ?? 15) : (availableTables21[formData.date] ?? 15);
-     
-      if (formData.time === "18:00" && availableTable - tablesToBook <= 1 ||
-      formData.time === "21:00"  && availableTable - tablesToBook <= 1) {
-        alert("No available tables for the selected date and time. Please choose another date or time.");
-      }
-     
-    if (totalBookings + tablesToBook <= availableTable) {
-      if (formData.time === "18:00") {
-        availableTables18[formData.date] = availableTable - tablesToBook;
-        setAvailableTables18({ ...availableTables18 });
-     
-      } else if (formData.time === "21:00") {
-        availableTables21[formData.date] = availableTable - tablesToBook;
-        setAvailableTables21({ ...availableTables21 });
-      }
- 
-      await createBooking(formData);
- 
-      const updatedBookings = await getBookings();
-      setBookings(updatedBookings.data);
- 
-    } else {
-      return setFormData({
-        ...formData,
-        date: "",
-        time: "",
-      });
-      
-    }
-    console.log(bookings);
- 
-  }
  
   return <>
   <section className="booking--container">
@@ -127,10 +129,8 @@ export const Bookingg  = () => {
       <option value={4}>4</option>
       <option value={5}>5</option>
       <option value={6}>6</option>
-      <option value={7}>7</option>
-      <option value={8}>8</option>
-      <option value={9}>9</option>
-      <option value={10}>10</option>
+      <option value={7}>+6</option>
+
     </select>
    
     <select
@@ -140,8 +140,8 @@ export const Bookingg  = () => {
     onChange={handleInputChange}
     >
       <option value="" disabled>Time</option>
-      <option value={18} >18:00</option>
-      <option value={21} >21:00</option>
+      <option value="18:00" >18:00</option>
+      <option value="21:00" >21:00</option>
     </select>
  
     <input
