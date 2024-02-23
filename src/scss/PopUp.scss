@@ -1,0 +1,53 @@
+.pop-up-container{
+    background-color: rgba(117, 117, 117, 0.2);
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 35vh;
+    padding: 0 20px;
+    
+
+    .pop-up-content{
+  
+        text-align: center;
+        
+            h2{
+                color: white;
+            }
+
+            h3{
+                color: white;
+                margin: 15px 0;
+            }
+
+        button{
+            width: 90px;
+            margin: 15px auto;
+            padding: 10px;
+            font-weight: bold;
+            border: 1px solid rgb(255, 201, 119);
+            background: none;
+            border-radius: 5px;
+            color: white;
+        }
+    }
+
+    @media screen and (min-width: 700px) {
+     
+            width: 35%;
+
+            button{
+                transition: background-color 0.2s;
+                cursor: pointer;
+                
+                &:hover{
+                    background-color: rgb(255, 201, 119);
+                    transition: background-color 0.2s;
+                }
+            
+        }
+      }
+    
+}

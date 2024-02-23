@@ -1,0 +1,98 @@
+.booking--container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(117, 117, 117, 0.2);
+  width: 55%;
+  margin: 0 auto;
+  padding: 20px 0;
+
+  h1{
+    color: white;
+    margin-bottom: 15px;
+  }
+
+  select {
+    padding: 10px;
+    border-radius: 5px;
+  
+  }
+
+  input {
+    padding: 10px;
+    border-radius: 5px;
+    border-style: none;
+    margin: 10px 0;
+  }
+
+  button {
+    width: 90px;
+    margin: 15px auto;
+    padding: 10px;
+    font-weight: bold;
+    border: 1px solid rgb(255, 201, 119);
+    background: none;
+    border-radius: 5px;
+    color: white;
+  }
+
+  .container-number-of-guests{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+  }
+
+  .container-date-time{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .booking-contact{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h5{
+      color: white;
+      text-align: center;
+    }
+
+    button{
+      width:85%;
+      padding: 15px 0;
+    }
+  }
+
+  .GDPR{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .GDPR-checlbox{
+      width: 20px;
+    }
+    p{
+      color: rgb(255, 201, 119);
+
+    }
+  }
+
+  @media screen and (min-width: 700px) {
+    .booking-contact{
+    input{
+      width: 250px;
+    }
+  }
+    button{
+      transition: background-color 0.2s;
+      cursor: pointer;
+
+      &:hover{
+        background-color: rgb(255, 201, 119);
+        transition: background-color 0.2s;
+      }
+    }
+  }
+
+}
