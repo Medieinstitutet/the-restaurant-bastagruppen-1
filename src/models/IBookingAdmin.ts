@@ -5,4 +5,4 @@ export interface IBookingAdmin {
   _id: string;
   restaurantId: string;
   customerId: string;
-}
+};
