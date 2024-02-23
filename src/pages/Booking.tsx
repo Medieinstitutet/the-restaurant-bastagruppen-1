@@ -3,12 +3,13 @@ import "../scss/Booking.scss";
 import { createBooking } from "../services/BookingCreate";
 import { getBookings } from "../services/GetBookings";
 import { IBooking } from "../models/Booking";
-import { IBookingAdmin } from "../models/IBookingAdmin";
 
 export const Bookingg  = () => {
   const [bookings, setBookings] = useState<IBooking[]>([]);
+  const [showGuests, setShowGuests] = useState(true);
   const [showDateTime, setShowDateTime] = useState(false);
   const [showBookingForm, setShowBookingForm] = useState(false);
+  const [isGDPR, setIsGDPR] = useState(false)
   
   let totalTables: number = 15;
   
@@ -20,7 +21,6 @@ export const Bookingg  = () => {
     };
     getBookingData();
   },[]);
-
 
 
 const [formData, setFormData] = useState<IBooking>({
@@ -60,6 +60,7 @@ const handleSearcDateTime = () => {
   }
 
   setShowDateTime(true)
+  setShowGuests(false)
 }
 
 const handleSearch = () => {
@@ -70,23 +71,23 @@ const handleSearch = () => {
         alert('There are no tables available for the date and time you have selected');
         return;
       }
+
+      if(formData.date === "" || formData.time === ""){
+        alert("Ange datum och tid")
+        return;
+      }
     
     setShowBookingForm(true)
+    setShowDateTime(false)
 };
 
 const handleSubmit = async (e: FormEvent) => {
   e.preventDefault();
-
-  const existingBookingsCount = bookings.filter(
-    (booking) => booking.date === formData.date && booking.time === formData.time).length;
-     
-    if (existingBookingsCount) {
-      alert('Booking successful');
-      return;
-    } 
-    
+  
     setShowDateTime(false); 
     setShowBookingForm(false); 
+
+    setShowGuests(true)
   
     await createBooking(formData);
     const updatedBookings = await getBookings();
@@ -126,13 +127,19 @@ const handleSubmit = async (e: FormEvent) => {
           : {}),
       },
     }));
+
   };
- 
+  
+  const handleGDPR = () => {
+  setIsGDPR(!isGDPR);
+  }
+
   return <>
   <section className="booking--container">
     <h1>BOOK A TABLE</h1>
-  <div className="persons-time-date">
-    <div>
+    
+  {showGuests && (
+    <div className="container-number-of-guests">
       <select 
       name="numberOfGuests"
       value={formData?.numberOfGuests}
@@ -147,17 +154,22 @@ const handleSubmit = async (e: FormEvent) => {
       <option value={6}>6</option>
       <option value={7}>+6</option>
     </select>
-    <button onClick={handleSearcDateTime}>Search date & time</button>
+    
+    <button
+    onClick={handleSearcDateTime}>Next
+    </button>
   </div>
+     )};
         
   {showDateTime && (
-    <div>
+    <div className="container-date-time">
       <select
         id="time"
         name="time"
         className="booking-time"
         value={formData?.time}
-        onChange={handleInputChange}>
+        onChange={handleInputChange}
+        >
 
       <option value="" disabled>Time</option>
       <option value="18:00" >18:00</option>
@@ -170,11 +182,12 @@ const handleSubmit = async (e: FormEvent) => {
       type="date"
       value={formData?.date}
       onChange={handleInputChange}
-      required/>
+      min={new Date().toISOString().slice(0, 10)} 
+      />
   
-      <button onClick={handleSearch}>Search Booking</button> 
+      <button onClick={handleSearch}>Next</button> 
     </div>
-   )}
+   )};
  
     {showBookingForm && (
       <form onSubmit={handleSubmit}>
@@ -212,11 +225,22 @@ const handleSubmit = async (e: FormEvent) => {
       placeholder="blabla@hotmail.com"
       value={formData?.customer.email}
       onChange={handleInputChange}/>
+
+      <div className="GDPR">
+        <input 
+        className="GDPR-checlbox"
+        type="checkbox"
+        checked={isGDPR}
+        required
+        onChange={handleGDPR}/> <p>I accept GDPR</p>
+      </div>
+
+    <button id="submit" type="submit">Request Booking</button>
     </div>
  
-    <button id="submit" type="submit">Request Booking</button>
     </form>
     )} 
-    </div>
+    
   </section>
   </>};
+
