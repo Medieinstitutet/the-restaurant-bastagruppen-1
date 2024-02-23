@@ -3,21 +3,25 @@ import "../scss/Booking.scss";
 import { createBooking } from "../services/BookingCreate";
 import { getBookings } from "../services/GetBookings";
 import { IBooking } from "../models/Booking";
+import { CustomerBooking } from "../components/CustomerBooking";
+import { BookingPopUp } from "../components/BookingPopUp";
 
 export const Bookingg  = () => {
-  const [bookings, setBookings] = useState<IBooking[]>([]);
   const [showGuests, setShowGuests] = useState(true);
   const [showDateTime, setShowDateTime] = useState(false);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [isGDPR, setIsGDPR] = useState(false)
-  
+  const [showPopUp, setShowPopUp] = useState(false)
+  const [hiddenForm, setHiddenForm] = useState(true)
+
+  const [bookings, setBookings] = useState<IBooking[]>([]);
+ 
   let totalTables: number = 15;
   
   useEffect(() => {
     const getBookingData = async () => {
       const response = await getBookings();
       setBookings(response.data);
-      console.log(response.data);
     };
     getBookingData();
   },[]);
@@ -83,11 +87,16 @@ const handleSearch = () => {
 
 const handleSubmit = async (e: FormEvent) => {
   e.preventDefault();
+
+
   
     setShowDateTime(false); 
     setShowBookingForm(false); 
 
     setShowGuests(true)
+    setIsGDPR(false)
+    setShowPopUp(true)
+    setHiddenForm(false)
   
     await createBooking(formData);
     const updatedBookings = await getBookings();
@@ -108,6 +117,7 @@ const handleSubmit = async (e: FormEvent) => {
     });
       
     console.log(bookings);
+
 
 }
 
@@ -135,112 +145,22 @@ const handleSubmit = async (e: FormEvent) => {
   }
 
   return <>
-  <section className="booking--container">
-    <h1>BOOK A TABLE</h1>
-    
-  {showGuests && (
-    <div className="container-number-of-guests">
-      <select 
-      name="numberOfGuests"
-      value={formData?.numberOfGuests}
-      onChange={handleInputChange} >
-      
-      <option value={0} disabled>Number of guests</option>
-      <option value={1}>1</option>
-      <option value={2}>2</option>
-      <option value={3}>3</option>
-      <option value={4}>4</option>
-      <option value={5}>5</option>
-      <option value={6}>6</option>
-      <option value={7}>+6</option>
-    </select>
-    
-    <button
-    onClick={handleSearcDateTime}>Next
-    </button>
-  </div>
-     )};
-        
-  {showDateTime && (
-    <div className="container-date-time">
-      <select
-        id="time"
-        name="time"
-        className="booking-time"
-        value={formData?.time}
-        onChange={handleInputChange}
-        >
+    <CustomerBooking
+       showGuests={showGuests}
+       showDateTime={showDateTime}
+       showBookingForm={showBookingForm}
+       formData={formData}
+       handleInputChange={handleInputChange}
+       handleSearch={handleSearch}
+       handleSearcDateTime={handleSearcDateTime}
+       handleGDPR={handleGDPR}
+       handleSubmit={handleSubmit}
+       isGDPR={isGDPR}
+       showPopUp={showPopUp} 
+       hiddenForm={hiddenForm}/>
 
-      <option value="" disabled>Time</option>
-      <option value="18:00" >18:00</option>
-      <option value="21:00" >21:00</option>
-    </select>
+    {showPopUp && <BookingPopUp onClose={() => setShowPopUp(false)} />}
+  </>
 
-    <input
-      id="date"
-      name="date"    
-      type="date"
-      value={formData?.date}
-      onChange={handleInputChange}
-      min={new Date().toISOString().slice(0, 10)} 
-      />
-  
-      <button onClick={handleSearch}>Next</button> 
-    </div>
-   )};
- 
-    {showBookingForm && (
-      <form onSubmit={handleSubmit}>
-      <div className="booking-contact">
-      
-      <h5>CONTACT DETAILS</h5>
-     
-      <input
-      name="name"
-      type="text"
-      placeholder="Firstname"
-      value={formData?.customer.name}
-      onChange={handleInputChange}
-      required/>
- 
-     
-      <input
-      name="lastname"
-      type="text"
-      placeholder="Lastname"
-      value={formData?.customer.lastname}
-      onChange={handleInputChange}/>
-     
-      <input
-      name="phone"
-      type="tel"
-      placeholder="070 000 00 22"
-      value={formData?.customer.phone}
-      onChange={handleInputChange}
-      />
-     
-      <input
-      name="email"
-      type="email"
-      placeholder="blabla@hotmail.com"
-      value={formData?.customer.email}
-      onChange={handleInputChange}/>
-
-      <div className="GDPR">
-        <input 
-        className="GDPR-checlbox"
-        type="checkbox"
-        checked={isGDPR}
-        required
-        onChange={handleGDPR}/> <p>I accept GDPR</p>
-      </div>
-
-    <button id="submit" type="submit">Request Booking</button>
-    </div>
- 
-    </form>
-    )} 
-    
-  </section>
-  </>};
+  };
 
